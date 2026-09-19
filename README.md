@@ -10,7 +10,9 @@ The three projects below are personal demonstrations using synthetic business da
 
 For a team copying website inquiries into a contact list. A form submission becomes an assigned inquiry, a contact update, and a notification draft. Duplicate deliveries are recognized; missing information and uncertain writes stay visible for review. Completing an old inquiry does not overwrite newer contact details.
 
-[See the current review flow — 20 seconds](https://github.com/myp81607-dot/lead-to-crm-automation/blob/main/docs/review-update.webm) · [Full walkthrough — 58 seconds](https://github.com/myp81607-dot/lead-to-crm-automation/blob/main/docs/demo.webm) · [Screenshot](assets/lead-to-crm.png). Recordings download via GitHub's **View raw** link.
+[![Inquiry review showing the current contact and next action](assets/lead-to-crm.png)](https://github.com/myp81607-dot/lead-to-crm-automation)
+
+[See the current review flow — 20 seconds](https://github.com/myp81607-dot/lead-to-crm-automation/blob/main/docs/review-update.webm) · [Full walkthrough — 58 seconds](https://github.com/myp81607-dot/lead-to-crm-automation/blob/main/docs/demo.webm). Recordings download via GitHub's **View raw** link.
 
 The supplied workflow has run in n8n 2.39.8 against the local Python service and SQLite CRM, including scheduled retries. HubSpot and live AI remain unverified. Notifications are saved drafts.
 
@@ -18,7 +20,9 @@ The supplied workflow has run in n8n 2.39.8 against the local Python service and
 
 For an operations team preparing supplier invoices for a spreadsheet. Upload a text PDF, compare the extracted fields with their source, correct or reject problems, and export confirmed records as CSV. Edits and notes stay in a separate draft when you switch invoices; a stale browser tab cannot silently overwrite a newer saved record.
 
-[60-second step-by-step demo](https://github.com/myp81607-dot/pdf-invoice-reviewer/blob/main/docs/demo.mp4) · [Review screen](assets/invoice-review.jpg) · [Try the sample invoices](https://github.com/myp81607-dot/pdf-invoice-reviewer#readme)
+[![Invoice review with extracted fields and the source document](assets/invoice-review.jpg)](https://github.com/myp81607-dot/pdf-invoice-reviewer)
+
+[60-second step-by-step demo](https://github.com/myp81607-dot/pdf-invoice-reviewer/blob/main/docs/demo.mp4) · [Try the sample invoices](https://github.com/myp81607-dot/pdf-invoice-reviewer#readme)
 
 Tested with synthetic English text PDFs. Unfamiliar layouts may need manual completion; scans are unsupported. The repository reports extraction failures as well as the results after fixes.
 
@@ -26,7 +30,9 @@ Tested with synthetic English text PDFs. Unfamiliar layouts may need manual comp
 
 For a support agent looking up a product policy before replying. Search versioned documents, open the supporting passages, and leave a handoff when the information is missing or conflicting. Optional answer mode adds a short draft that an operator must check and approve before copying. Your own documents can be loaded from a small JSON file.
 
-[35-second search and handoff demo](https://github.com/myp81607-dot/support-assistant-with-citations/blob/main/docs/demo.webm) · [Evidence screen](assets/support-evidence.jpg) · [Examples](https://github.com/myp81607-dot/support-assistant-with-citations#readme)
+[![Support search results with source excerpts and citations](assets/support-evidence.jpg)](https://github.com/myp81607-dot/support-assistant-with-citations)
+
+[35-second search and handoff demo](https://github.com/myp81607-dot/support-assistant-with-citations/blob/main/docs/demo.webm) · [Examples](https://github.com/myp81607-dot/support-assistant-with-citations#readme)
 
 Search, document updates, handoff, and the approval rules have been tested. Default mode uses no model. The DeepSeek adapter and draft flow were tested with simulated responses; live model answer quality remains unverified.
 

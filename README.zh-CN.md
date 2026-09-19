@@ -1,61 +1,39 @@
-# 让日常业务更好处理的小工具
+# Python 自动化与 API 集成
 
 [English](README.md) · [简体中文](README.zh-CN.md)
 
-我开发小型应用，帮助团队整理收到的工作、核对处理结果，并把异常交给人判断。
+我用 Python 为团队开发线索录入、发票处理和客服工具，也处理实际使用中需要的输入检查、复核界面和异常恢复。
 
-## 从你遇到的问题开始
+下面三个项目均为使用合成业务数据的个人演示，并非付费客户案例。各项目可本地运行，附中英文说明、测试结果和已知限制。
 
-| 你的团队需要…… | 对应项目 | 可以得到的结果 |
-| --- | --- | --- |
-| 整理咨询线索，避免重复创建联系人 | [线索到 CRM 自动化](https://github.com/myp81607-dot/lead-to-crm-automation) | 有负责人、可追踪的咨询和联系人更新 |
-| 把 PDF 发票整理成经过核对的表格 | [发票提取与复核工作台](https://github.com/myp81607-dot/pdf-invoice-reviewer) | 附原文依据、经过复核的记录与 CSV |
-| 找到客服政策，并检查资料依据 | [HarborDesk 客服知识工作台](https://github.com/myp81607-dot/support-assistant-with-citations) | 带版本的文档摘录，或可追踪的人工工单 |
+## [线索到 CRM 自动化](https://github.com/myp81607-dot/lead-to-crm-automation)
 
-**这些是使用合成业务数据的个人演示项目，并非付费客户案例。** 三个项目均可本地运行；各仓库提供中英文说明、真实截图、可复现验证、失败案例与参考来源。
+适合仍在手工把网站咨询录入联系人列表的团队。提交表单后，可以查看咨询的负责人、联系人更新和通知草稿。重复投递会被识别，缺失信息和需要核实写入结果的记录会留在复核队列中。补完旧咨询不会覆盖较新的联系人资料。
 
-## 线索到 CRM 自动化
+[当前复核流程：20 秒](https://github.com/myp81607-dot/lead-to-crm-automation/blob/main/docs/review-update.webm) · [完整流程：58 秒](https://github.com/myp81607-dot/lead-to-crm-automation/blob/main/docs/demo.webm) · [截图](assets/lead-to-crm.png)。录像通过 GitHub 的 **View raw** 下载播放。
 
-**问题：** 咨询收到以后，联系人资料、分配结果和后续处理容易分散。
+仓库中的工作流已在 n8n 2.39.8 中实际运行，连接本地 Python 服务与 SQLite CRM，包括定时重试。HubSpot 与真实 AI 尚未实连验证，通知保存为草稿。
 
-**流程：** 表单 → 校验 → 明确规则分配 → 联系人更新或人工复核。
+## [PDF 发票复核工具](https://github.com/myp81607-dot/pdf-invoice-reviewer)
 
-实现区分“同一事件重复投递”和“同一联系人发来新咨询”。写入超时后，必须通过读回核对确认结果。Python、SQLite、英文复核界面与 n8n 工作流导出让每一步都可检查。
+适合需要把供应商发票整理成表格的运营人员。上传文本 PDF，对照原文检查提取字段，修正或拒绝有问题的记录，再将已确认记录导出为 CSV。切换发票时会保留独立的字段与备注草稿；旧页签不能静默覆盖较新的已保存记录。
 
-<a href="https://github.com/myp81607-dot/lead-to-crm-automation"><img src="assets/lead-to-crm.png" width="720" alt="真实本地运行：咨询队列、分配结果、联系人更新与通知草稿"></a>
+[60 秒操作步骤演示](https://github.com/myp81607-dot/pdf-invoice-reviewer/blob/main/docs/demo.mp4) · [复核界面](assets/invoice-review.jpg) · [试用样例发票](https://github.com/myp81607-dot/pdf-invoice-reviewer#readme)
 
-**已验证范围：** 本地 CRM 与通知草稿。HubSpot 和真实 AI 尚未实连；n8n 导出完成结构检查，尚未在 n8n 中运行。
+已使用合成的英文文本 PDF 测试。陌生版式可能需要人工补录；不支持扫描件。仓库同时记录提取失败和修复后的测试结果。
 
-[运行项目，查看查重与失败恢复示例 →](https://github.com/myp81607-dot/lead-to-crm-automation#readme)
+## [带来源的客服知识工作台](https://github.com/myp81607-dot/support-assistant-with-citations)
 
-## 发票提取与复核工作台
+适合需要先查产品政策、再回复客户的客服人员。可以搜索带版本的文档、打开支持原文，并在资料不足或冲突时留下人工工单。可选回答模式会生成简短草稿，需要操作者核对并批准后才能复制。自己的资料可通过一份简单的 JSON 文件导入。
 
-**问题：** 从发票中读出文字，还不能证明字段与金额正确。
+[35 秒检索与交接演示](https://github.com/myp81607-dot/support-assistant-with-citations/blob/main/docs/demo.webm) · [资料依据界面](assets/support-evidence.jpg) · [问题示例](https://github.com/myp81607-dot/support-assistant-with-citations#readme)
 
-**流程：** 文本 PDF → 有原文依据的字段 → 十进制金额校验 → 人工复核 → CSV。
+检索、文档更新、人工交接与批准规则已经过测试。默认模式不调用模型；DeepSeek 适配器和草稿流程使用模拟响应验证，真实模型的回答质量尚未验证。
 
-复核人员可以并排查看文档和可修改字段。缺失值、金额不符和重复单据需要处理后才能导出。Python、PDF 文字坐标、SQLite 与复核界面将提取过程连接到可使用的结果。
+## 开始一个类似项目
 
-<a href="https://github.com/myp81607-dot/pdf-invoice-reviewer"><img src="assets/invoice-review.jpg" width="720" alt="真实本地运行：发票字段、PDF 原文与复核操作"></a>
-
-**已验证范围：** 带文本的合成发票。陌生版式可能漏字段，需要人工补录；不支持扫描件，评测如实报告失败情况。
-
-[查看提取、修改与导出流程 →](https://github.com/myp81607-dot/pdf-invoice-reviewer#readme)
-
-## HarborDesk 客服知识工作台
-
-**问题：** 客服人员需要找到相关政策，也需要在资料不足时有明确的下一步。
-
-**流程：** 提问 → 词法检索 → 带版本的原文摘录 → 人工复核或本地工单。
-
-工作台展示来源原文、带标签的政策冲突、文档版本和工单备注。FastAPI 与 SQLite 支撑完整流程；原仓库的 TF-IDF 学习基线和历史均被保留。
-
-<a href="https://github.com/myp81607-dot/support-assistant-with-citations"><img src="assets/support-evidence.jpg" width="720" alt="真实本地运行：客服问题与带版本的文档依据"></a>
-
-**已验证范围：** 检索、引文、文档更新与人工交接。默认模式不调用模型；可选本地模型适配器完成传输测试，真实生成尚未验证。
-
-[核查资料依据与已知检索失败 →](https://github.com/myp81607-dot/support-assistant-with-citations#readme)
-
----
-
-如果你有类似需求，**一份输入样例、期望输出和需要人工处理的例外情况**，就是有用的起点。
+| 可以讨论的工作范围 | 开始前准备的材料 |
+| --- | --- |
+| 表单到 CRM 的集成，或现有流程修复 | 样例输入、目标字段和获授权的测试环境 |
+| 指定供应商 PDF 的复核与 CSV 导出 | 样例文档、必需字段和校验规则 |
+| 为客服知识库补充来源与人工交接 | 可使用的资料、问题样例和转人工条件 |
